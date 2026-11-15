@@ -17,3 +17,9 @@ on post-fs-data
 # init sets this state as soon as zygote dies, before it is started again.
 on property:init.svc.zygote=restarting
     exec_start z3tc_clean_sscache
+    # Keep the device awake while the framework restarts: system_server's wakelocks die
+    # with it, and zygote's "onrestart write /sys/power/state on" is rejected by this
+    # kernel, so with the screen off system_suspend would suspend the device in the middle
+    # of the restart (restarts took 15-25 min, mostly asleep). Kernel wakelock with a
+    # 5 min timeout: no release needed, and it can't keep the device awake forever.
+    write /sys/power/wake_lock "z3tc_zygote_restart 300000000000"
