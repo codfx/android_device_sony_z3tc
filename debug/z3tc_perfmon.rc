@@ -1,0 +1,10 @@
+# BRING-UP DEBUG: early boot/perf logger to /cache/z3tc
+service z3tc_perfmon /vendor/bin/z3tc_perfmon.sh
+    user root
+    group root
+    seclabel u:r:su:s0
+    disabled
+    oneshot
+
+on post-fs
+    start z3tc_perfmon

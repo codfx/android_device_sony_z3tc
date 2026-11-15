@@ -1,0 +1,19 @@
+# Workaround (3.4 kernel, no fs-verity): Android 12 system_server aborts on APEX
+# system-server jars compiled into /data/dalvik-cache ("Executing untrusted code").
+# odrefresh output can't be verified without fs-verity, so remove them on every boot.
+service z3tc_clean_sscache /system/bin/sh -c "rm -f /data/dalvik-cache/arm/apex@*"
+    user root
+    group root
+    seclabel u:r:su:s0
+    disabled
+    oneshot
+
+on post-fs-data
+    exec_start z3tc_clean_sscache
+
+# Same cleanup when zygote restarts (system_server crash / soft reboot): otherwise
+# the restarted system_server finds the previous boot's dalvik-cache odex for the
+# APEX system-server jars and aborts with "Executing untrusted code" in a loop.
+# init sets this state as soon as zygote dies, before it is started again.
+on property:init.svc.zygote=restarting
+    exec_start z3tc_clean_sscache
