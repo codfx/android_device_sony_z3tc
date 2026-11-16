@@ -39,6 +39,10 @@ DEVICE_PACKAGE_OVERLAYS += \
     $(LOCAL_PATH)/overlay \
     $(LOCAL_PATH)/overlay-lineage
 
+# Wi-Fi config (Android 12 reads it only from RROs targeting com.android.wifi.resources)
+PRODUCT_PACKAGES += \
+    WifiOverlayZ3tc
+
 # force sw keys
 PRODUCT_PROPERTY_OVERRIDES += \
     qemu.hw.mainkeys=0
