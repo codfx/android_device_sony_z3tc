@@ -103,6 +103,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init.z3tc.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.z3tc.rc
 
+# Charge limiter (off by default; persist.vendor.z3tc.charge_*)
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/charge/z3tc_charge_limit.sh:$(TARGET_COPY_OUT_VENDOR)/bin/z3tc_charge_limit.sh \
+    $(LOCAL_PATH)/charge/init.z3tc.charge.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.z3tc.charge.rc
+
 # BRING-UP DEBUG: adb over network on port 5555 (home network only! remove for release)
 PRODUCT_PROPERTY_OVERRIDES += \
     service.adb.tcp.port=5555
