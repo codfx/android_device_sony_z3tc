@@ -23,3 +23,9 @@ on property:init.svc.zygote=restarting
     # of the restart (restarts took 15-25 min, mostly asleep). Kernel wakelock with a
     # 5 min timeout: no release needed, and it can't keep the device awake forever.
     write /sys/power/wake_lock "z3tc_zygote_restart 300000000000"
+
+# Same for the Wi-Fi HAL alone (it crashed / was killed, init restarts it): Wi-Fi recovery holds no
+# wakelock, so with the screen off the device kept suspending and Wi-Fi stayed down for 8-16+ min.
+# 2 min kernel wakelock, released automatically.
+on property:init.svc.vendor.wifi_hal_legacy=restarting
+    write /sys/power/wake_lock "z3tc_wifihal_restart 120000000000"
