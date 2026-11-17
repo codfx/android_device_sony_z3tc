@@ -1,0 +1,2 @@
+# Charge limiter
+persist.vendor.z3tc.charge_    u:object_r:vendor_z3tc_charge_prop:s0

@@ -1,0 +1,2 @@
+# Charge limiter
+/(vendor|system/vendor)/bin/z3tc_charge_limit\.sh    u:object_r:z3tc_charge_limit_exec:s0

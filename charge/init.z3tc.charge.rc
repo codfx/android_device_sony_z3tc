@@ -1,18 +1,22 @@
 # Battery charge limiter, off by default (see /vendor/bin/z3tc_charge_limit.sh).
+
+# Before load_persist_props, whose property triggers below start the service at boot.
+on post-fs-data
+    chown system system /sys/class/power_supply/battery/enable_llk
+    chown system system /sys/class/power_supply/battery/llk_socmax
+    chown system system /sys/class/power_supply/battery/llk_socmin
+
 service z3tc_charge_limit /vendor/bin/z3tc_charge_limit.sh
-    class late_start
-    user root
-    group root system
-    seclabel u:r:su:s0
+    user system
+    group system
     disabled
     oneshot
 
-# Persist properties are loaded at boot, which also fires these triggers.
+on property:persist.vendor.z3tc.charge_limit_enable=*
+    restart z3tc_charge_limit
+
 on property:persist.vendor.z3tc.charge_limit=*
     restart z3tc_charge_limit
 
 on property:persist.vendor.z3tc.charge_resume=*
-    restart z3tc_charge_limit
-
-on property:persist.vendor.z3tc.charge_idle=*
     restart z3tc_charge_limit
