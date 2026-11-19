@@ -134,4 +134,10 @@
          config to 7. -->
     <integer name="config_deviceHardwareKeys">64</integer>
 
+
+    <!-- No significant-motion sensor (ro.qti.sensors.smd=false, shinano-common): with the framework default (true),
+         DeviceIdleController never schedules the deep idle alarms and the tablet never enters deep Doze.
+         Tested as a vendor RRO: ~90 % of the night in deep IDLE. -->
+    <bool name="config_autoPowerModeUseMotionSensor">false</bool>
+
 </resources>
