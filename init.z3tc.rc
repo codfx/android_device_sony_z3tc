@@ -33,15 +33,18 @@ on property:init.svc.vendor.wifi_hal_legacy=restarting
 # No mpdecision, all CPUs online. Bringing a CPU online while its cpufreq policy is being changed resets this
 # SoC (PS_HOLD drop): mpdecision hotplugs 40-60 times a minute under load and its perf locks raise the min
 # frequency on every launch and touch. The power HAL applies the boosts itself through sysfs instead.
-# Runs after init.qcom.power.rc's "on property:dev.bootcomplete=1" block, which offlines cpu1-3 earlier, sets
-# vendor.post_boot.parsed=1 and then starts mpdecision. msm_thermal core control stays on (offlines cpu1-3 only
-# at 80 C as a last resort).
-on property:vendor.post_boot.parsed=1
+# Triggered by mpdecision's own service state, so it works however and whenever init.qcom.power.rc starts it
+# (its vendor.post_boot.parsed trigger needs a property vendor_init may not set under enforcing SELinux).
+# msm_thermal core control stays on (offlines cpu1-3 only at 80 C as a last resort).
+on property:init.svc.mpdecision=running
     stop mpdecision
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1
-    # the power HAL (user system) applies the display-off / video governor values itself
+
+# The power HAL (user system) applies the display-off / video governor values itself. Not "on boot": the
+# interactive governor nodes only exist after init.qcom.power.rc's enable-low-power action (triggered from boot).
+on property:sys.boot_completed=1
     chown system system /sys/devices/system/cpu/cpufreq/interactive/timer_rate
     chown system system /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
     chown system system /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
