@@ -5,6 +5,7 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources>
-    <!-- Default access point SSID used for tethering -->
-    <string name="wifi_tether_configure_ssid_default" translatable="false">Sony Xperia Z3 Tablet Compact</string>
+    <!-- Default access point SSID used for tethering. WifiApConfigStore appends "_" + 4 digits and the
+         SSID must stay within 32 bytes, so keep this at 27 bytes or less. -->
+    <string name="wifi_tether_configure_ssid_default" translatable="false">Xperia Z3 Tablet Compact</string>
 </resources>
