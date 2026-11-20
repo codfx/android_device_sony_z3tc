@@ -32,21 +32,25 @@ if [ "$(getprop persist.vendor.z3tc.charge_limit_enable)" != 1 ]; then
         exit 0
     fi
     # enable_llk=0 alone leaves an active pause in place (the driver only clears it in its own
-    # check), so first let the driver resume charging, then switch LLK off.
-    echo 100 > $B/llk_socmin
+    # check), so first let the driver resume charging, then switch LLK off. The driver tests
+    # "capacity >= max -> pause" before "capacity <= min -> charge", so both limits go above any
+    # possible capacity (the driver accepts any value). Then poll until charging has resumed
+    # (the driver checks every 3 s), for at most OFF_WAIT seconds.
+    OFF_WAIT=30
+    echo 101 > $B/llk_socmax
+    echo 101 > $B/llk_socmin
     i=0
-    while [ $i -lt 10 ]; do
+    while [ $i -lt $OFF_WAIT ]; do
         case "$(cat $B/status)" in Charging|Full) break ;; esac
         [ "$(cat /sys/class/power_supply/usb/online)$(cat /sys/class/power_supply/qpnp-dc/online)" = 00 ] && break
         sleep 1
         i=$((i + 1))
     done
-    if [ $i -ge 10 ]; then
+    if [ $i -ge $OFF_WAIT ]; then
         # Not resumed yet (e.g. charging held off for temperature). Switching LLK off now could
-        # leave the pause stuck until an unplug, so leave it on with limits that never pause
-        # below 100 %: the driver clears the pause at its next check. A reboot resets LLK to off.
-        echo 100 > $B/llk_socmax
-        log_i "off pending: charging not resumed after ${i}s (status $(cat $B/status)), LLK left at 100/100"
+        # leave the pause stuck until an unplug, so leave it on at 101/101, which never pauses:
+        # the driver clears the pause at its next check. A reboot resets LLK to off.
+        log_i "off pending: charging not resumed after ${i}s (status $(cat $B/status)), LLK left at 101/101"
         exit 0
     fi
     echo 0 > $B/enable_llk
