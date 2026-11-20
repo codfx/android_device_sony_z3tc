@@ -1,0 +1,15 @@
+//
+// Copyright (C) 2026 codfx
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+android_app {
+    name: "Z3tcChargeLimit",
+    srcs: ["src/**/*.java"],
+    resource_dirs: ["res"],
+    certificate: "platform",
+    platform_apis: true,
+    privileged: true,
+    system_ext_specific: true,
+}

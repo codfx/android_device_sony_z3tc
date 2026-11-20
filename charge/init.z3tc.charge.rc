@@ -12,11 +12,11 @@ service z3tc_charge_limit /vendor/bin/z3tc_charge_limit.sh
     disabled
     oneshot
 
-on property:persist.vendor.z3tc.charge_limit_enable=*
+on property:persist.sys.z3tc.charge_enable=*
     restart z3tc_charge_limit
 
-on property:persist.vendor.z3tc.charge_limit=*
+on property:persist.sys.z3tc.charge_limit=*
     restart z3tc_charge_limit
 
-on property:persist.vendor.z3tc.charge_resume=*
+on property:persist.sys.z3tc.charge_resume=*
     restart z3tc_charge_limit

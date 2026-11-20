@@ -1,0 +1,2 @@
+# Z3tcChargeLimit (Quick Settings tile and settings screen) stores the charge limiter settings
+set_prop(system_app, z3tc_charge_ctl_prop)

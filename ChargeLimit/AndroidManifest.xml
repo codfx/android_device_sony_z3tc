@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 codfx
+
+     SPDX-License-Identifier: Apache-2.0
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.lineageos.z3tc.chargelimit"
+    android:sharedUserId="android.uid.system">
+
+    <application
+        android:label="@string/app_name"
+        android:icon="@drawable/ic_charge_limit"
+        android:allowBackup="false"
+        android:defaultToDeviceProtectedStorage="true"
+        android:directBootAware="true">
+
+        <!-- Settings screen: opened from Settings > Battery and by long-pressing the tile -->
+        <activity
+            android:name=".ChargeLimitActivity"
+            android:label="@string/charge_limit_title"
+            android:theme="@android:style/Theme.DeviceDefault.Settings"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.settings.action.IA_SETTINGS" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
+            </intent-filter>
+            <meta-data android:name="com.android.settings.category"
+                       android:value="com.android.settings.category.ia.battery" />
+            <meta-data android:name="com.android.settings.title"
+                       android:resource="@string/charge_limit_title" />
+            <meta-data android:name="com.android.settings.summary"
+                       android:resource="@string/charge_limit_summary" />
+            <meta-data android:name="com.android.settings.icon"
+                       android:resource="@drawable/ic_charge_limit" />
+        </activity>
+
+        <service
+            android:name=".ChargeLimitTileService"
+            android:label="@string/charge_limit_title"
+            android:icon="@drawable/ic_charge_limit"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+            <meta-data android:name="android.service.quicksettings.TOGGLEABLE_TILE"
+                       android:value="true" />
+        </service>
+    </application>
+</manifest>

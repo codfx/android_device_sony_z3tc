@@ -4,9 +4,11 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 # Battery charge limiter for the Xperia Z3 Tablet Compact (off by default).
-#   persist.vendor.z3tc.charge_limit_enable  1 = on, anything else = off
-#   persist.vendor.z3tc.charge_limit         stop charging at this % (51..99, default 80)
-#   persist.vendor.z3tc.charge_resume        resume at or below this % (30..limit-1, default limit-5)
+#   persist.sys.z3tc.charge_enable  1 = on, anything else = off
+#   persist.sys.z3tc.charge_limit   stop charging at this % (51..99, default 80)
+#   persist.sys.z3tc.charge_resume  resume at or below this % (30..limit-1, default limit-5)
+# The settings are system properties so that the Z3tcChargeLimit app (Quick Settings tile and
+# Settings > Battery > Charge limit) can set them; this script only reads them.
 #
 # It drives the qpnp charger driver's own limiter (Sony "LLK": battery/enable_llk, llk_socmax,
 # llk_socmin). While a charger is connected the driver checks it every 3 s: at >= max it stops
@@ -26,7 +28,7 @@ log_i() { log -p i -t $TAG "$*"; }
 
 num() { case "$1" in ''|*[!0-9]*) echo "$2" ;; *) echo "$1" ;; esac; }
 
-if [ "$(getprop persist.vendor.z3tc.charge_limit_enable)" != 1 ]; then
+if [ "$(getprop persist.sys.z3tc.charge_enable)" != 1 ]; then
     if [ "$(cat $B/enable_llk)" = 0 ]; then
         log_i "off"
         exit 0
@@ -60,11 +62,11 @@ if [ "$(getprop persist.vendor.z3tc.charge_limit_enable)" != 1 ]; then
     exit 0
 fi
 
-LIMIT=$(num "$(getprop persist.vendor.z3tc.charge_limit)" 80)
+LIMIT=$(num "$(getprop persist.sys.z3tc.charge_limit)" 80)
 if [ "$LIMIT" -le 50 ] || [ "$LIMIT" -ge 100 ]; then
     LIMIT=80
 fi
-RESUME=$(num "$(getprop persist.vendor.z3tc.charge_resume)" $((LIMIT - 5)))
+RESUME=$(num "$(getprop persist.sys.z3tc.charge_resume)" $((LIMIT - 5)))
 if [ "$RESUME" -lt 30 ] || [ "$RESUME" -ge "$LIMIT" ]; then
     RESUME=$((LIMIT - 5))
 fi

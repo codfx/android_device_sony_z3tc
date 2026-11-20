@@ -1,0 +1,2 @@
+# Charge limiter settings (Z3tcChargeLimit)
+persist.sys.z3tc.charge_    u:object_r:z3tc_charge_ctl_prop:s0

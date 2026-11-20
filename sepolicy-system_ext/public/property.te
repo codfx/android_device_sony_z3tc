@@ -1,0 +1,3 @@
+# Charge limiter settings: written by the Z3tcChargeLimit app (system_app), read by the vendor
+# limiter script (z3tc_charge_limit), which drives the charger driver.
+system_restricted_prop(z3tc_charge_ctl_prop)

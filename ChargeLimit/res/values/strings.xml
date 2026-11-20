@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 codfx
+
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string name="app_name">Charge limit</string>
+    <string name="charge_limit_title">Charge limit</string>
+    <string name="charge_limit_summary">Stop charging below 100% to reduce battery wear</string>
+    <string name="tile_on">Stops at %1$d%%</string>
+    <string name="tile_off">Off</string>
+    <string name="switch_label">Limit charging</string>
+    <string name="limit_label">Stop charging at</string>
+    <string name="resume_label">Start charging again at</string>
+    <string name="percent">%1$d%%</string>
+    <string name="explanation">While the limit is reached the tablet runs from its battery even with the charger connected (the charger has no idle mode), so the level goes down to the lower value and is then charged back up. Settings shows \"Not charging\" meanwhile. For a single full charge, turn the limit off and back on afterwards.</string>
+</resources>
