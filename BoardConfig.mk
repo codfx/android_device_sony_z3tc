@@ -38,6 +38,10 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 12656242688
 # Power
 TARGET_TAP_TO_WAKE_NODE := "/sys/devices/virtual/input/clearpad/wakeup_gesture"
 
+# fstab: the SD card slot is on msm_sdcc.3 here (msm_sdcc.2 on the other shinano devices)
+TARGET_SHINANO_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.qcom
+TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.qcom
+
 # SELinux
 BOARD_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy
 SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy-system_ext/public
