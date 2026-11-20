@@ -1,6 +1,6 @@
 #!/vendor/bin/sh
 #
-# Copyright (C) 2026 The LineageOS Project
+# Copyright (C) 2026 codfx
 # SPDX-License-Identifier: Apache-2.0
 #
 # Battery charge limiter for the Xperia Z3 Tablet Compact (off by default).
