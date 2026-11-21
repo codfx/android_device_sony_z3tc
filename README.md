@@ -5,6 +5,9 @@ Codename: scorpion / z3tc (SGP621, SGP641 - LTE)
 
 Status: UNTESTED bring-up tree.
 
+Project site (status, known issues, changelog, technical notes):
+https://codfx.github.io/z3tc-lineage/
+
 Based on:
 - sony_scorpion/android_device_sony_z3tc (lineage-18.1, GitLab) for all
   tablet-specific files (audio, sensors, overlays, props, kernel config name)
