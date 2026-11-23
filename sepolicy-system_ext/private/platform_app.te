@@ -1,0 +1,2 @@
+# SystemUI reads the charge limiter settings to draw the "paused by charge limit" battery icon
+get_prop(platform_app, z3tc_charge_ctl_prop)
