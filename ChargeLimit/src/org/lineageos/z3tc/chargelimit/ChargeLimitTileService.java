@@ -6,8 +6,6 @@
 
 package org.lineageos.z3tc.chargelimit;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 
@@ -15,14 +13,16 @@ import android.service.quicksettings.TileService;
 public class ChargeLimitTileService extends TileService {
     // SystemUI keeps this service bound and does not call onStartListening again for every
     // shade opening, so changes made in the settings screen are pushed to the tile from there.
+    // When the service is not running, SystemUI reads the current settings on its next bind.
+    // (TileService.requestListeningState() is not used: from this system-uid app its broadcast
+    // logs an "unqualified user" warning and a "non-protected broadcast" error.)
     private static ChargeLimitTileService sInstance;
 
     /** Shows the current settings on the tile; called after changes in the settings screen. */
-    static void refresh(Context context) {
+    static void refresh() {
         if (sInstance != null) {
             sInstance.update(ChargeLimit.isEnabled());
         }
-        requestListeningState(context, new ComponentName(context, ChargeLimitTileService.class));
     }
 
     @Override

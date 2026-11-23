@@ -40,7 +40,7 @@ public class ChargeLimitActivity extends Activity {
         mEnable.setOnCheckedChangeListener((v, checked) -> {
             ChargeLimit.setEnabled(checked);
             PausedService.sync(this);
-            ChargeLimitTileService.refresh(this);
+            ChargeLimitTileService.refresh();
             updateEnabledState(checked);
         });
 
@@ -69,7 +69,7 @@ public class ChargeLimitActivity extends Activity {
                 // Store only when the user lets go: each change re-runs the limiter script.
                 ChargeLimit.setLevels(limitFromBar(), resumeFromBar());
                 PausedService.sync(ChargeLimitActivity.this);
-                ChargeLimitTileService.refresh(ChargeLimitActivity.this);
+                ChargeLimitTileService.refresh();
                 load();
             }
         };
