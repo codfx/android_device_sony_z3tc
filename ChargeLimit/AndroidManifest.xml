@@ -49,5 +49,20 @@
             <meta-data android:name="android.service.quicksettings.TOGGLEABLE_TILE"
                        android:value="true" />
         </service>
+
+        <!-- "Charging paused" notification: runs only while plugged in with the limit on -->
+        <service
+            android:name=".PausedService"
+            android:exported="false" />
+
+        <receiver
+            android:name=".ChargeLimitReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.POWER_CONNECTED" />
+                <action android:name="android.intent.action.POWER_DISCONNECTED" />
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

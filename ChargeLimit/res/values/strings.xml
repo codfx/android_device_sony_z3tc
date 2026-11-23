@@ -15,4 +15,8 @@
     <string name="resume_label">Start charging again at</string>
     <string name="percent">%1$d%%</string>
     <string name="explanation">While the limit is reached the tablet runs from its battery even with the charger connected (the charger has no idle mode), so the level goes down to the lower value and is then charged back up. Settings shows \"Not charging\" meanwhile. For a single full charge, turn the limit off and back on afterwards.</string>
+    <string name="paused_channel">Charging paused</string>
+    <string name="paused_channel_description">Shown while the charge limit has paused charging</string>
+    <string name="paused_title">Charging paused at %1$d%%</string>
+    <string name="paused_text">Charging starts again at %1$d%%</string>
 </resources>
