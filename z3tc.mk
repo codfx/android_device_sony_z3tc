@@ -67,22 +67,8 @@ PRODUCT_AAPT_PREF_CONFIG := xhdpi
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/thermanager.xml:$(TARGET_COPY_OUT_VENDOR)/etc/thermanager.xml
 
-# BRING-UP ONLY: adb without authorization from early boot (helps debug bootloops).
-# The ifneq below is commented out, so this applies to ALL builds. Remove for a release.
-#ifneq (,$(filter eng, $(TARGET_BUILD_VARIANT)))
-  PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.usb.config=mtp,adb
-#endif
-
 # Call the proprietary setup
 $(call inherit-product, vendor/sony/z3tc/z3tc-vendor.mk)
-PRODUCT_ADB_KEYS := device/sony/z3tc/adb_keys
-
-# BRING-UP DEBUG: keep booting after crashes and save logcat to /data/misc/logd
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.disable_rescue=true \
-    persist.logd.logpersistd=logcatd \
-    persist.logd.logpersistd.buffer=all
 
 # No JIT (no memfd on 3.4): compile everything ahead-of-time with "speed"
 PRODUCT_DEX_PREOPT_DEFAULT_COMPILER_FILTER := speed
@@ -93,16 +79,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     pm.dexopt.install=speed \
     pm.dexopt.install-bulk=speed \
     pm.dexopt.bg-dexopt=speed
-
-# BRING-UP DEBUG: early boot/perf logger (remove for release)
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/debug/z3tc_perfmon.sh:$(TARGET_COPY_OUT_VENDOR)/bin/z3tc_perfmon.sh \
-    $(LOCAL_PATH)/debug/z3tc_perfmon.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/z3tc_perfmon.rc
-
-# BRING-UP DEBUG: standby soak logger, started by init at boot (persist.vendor.z3tc.soak), PC-independent
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/debug/z3tc_soak.sh:$(TARGET_COPY_OUT_VENDOR)/bin/z3tc_soak.sh \
-    $(LOCAL_PATH)/debug/z3tc_soak.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/z3tc_soak.rc
 
 # Workaround: untrusted APEX system-server code in dalvik-cache (no fs-verity on 3.4)
 PRODUCT_COPY_FILES += \
@@ -117,6 +93,37 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/charge/z3tc_charge_limit.sh:$(TARGET_COPY_OUT_VENDOR)/bin/z3tc_charge_limit.sh \
     $(LOCAL_PATH)/charge/init.z3tc.charge.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.z3tc.charge.rc
 
-# BRING-UP DEBUG: adb over network on port 5555 (home network only! remove for release)
+# Bring-up debug options: development builds only.
+#   Z3TC_DEBUG_BUILD=true m bacon   development build, keeps everything below
+#   m bacon                         release build (unset or anything else): drops it all
+# Unset means release, so a forgotten variable can only drop debug options, never ship them.
+# After switching, run "m installclean" first so no debug files stay behind in out/.
+ifeq ($(Z3TC_DEBUG_BUILD),true)
+$(warning z3tc: Z3TC_DEBUG_BUILD=true, bring-up debug options included - not for release)
+
+# adb without authorization from early boot (helps debug bootloops): mtp,adb on all variants,
+# plus a pre-authorised host key in /adb_keys.
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.usb.config=mtp,adb
+PRODUCT_ADB_KEYS := device/sony/z3tc/adb_keys
+
+# adb over network on port 5555 (home network only!)
 PRODUCT_PROPERTY_OVERRIDES += \
     service.adb.tcp.port=5555
+
+# Keep booting after crashes and save logcat to /data/misc/logd
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.disable_rescue=true \
+    persist.logd.logpersistd=logcatd \
+    persist.logd.logpersistd.buffer=all
+
+# Early boot/perf logger (writes /cache/z3tc.prev)
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/debug/z3tc_perfmon.sh:$(TARGET_COPY_OUT_VENDOR)/bin/z3tc_perfmon.sh \
+    $(LOCAL_PATH)/debug/z3tc_perfmon.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/z3tc_perfmon.rc
+
+# Standby soak logger, started by init at boot (persist.vendor.z3tc.soak), PC-independent
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/debug/z3tc_soak.sh:$(TARGET_COPY_OUT_VENDOR)/bin/z3tc_soak.sh \
+    $(LOCAL_PATH)/debug/z3tc_soak.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/z3tc_soak.rc
+endif
