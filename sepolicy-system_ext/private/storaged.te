@@ -1,0 +1,8 @@
+# Copyright (C) 2026 codfx
+# SPDX-License-Identifier: Apache-2.0
+
+# storaged reads the eMMC's I/O counters (/sys/block/mmcblk0/stat). storaged is a private platform
+# type, so this has to live in system_ext policy rather than the vendor one.
+type sysfs_disk_stat, fs_type, sysfs_type;
+
+allow storaged sysfs_disk_stat:file r_file_perms;
