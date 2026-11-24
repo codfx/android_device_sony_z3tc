@@ -38,3 +38,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # USB path
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.usb.pid_suffix=1BB
+
+# Bluetooth: allow 8 s (instead of 2.9 s) for the controller start-up incl. the firmware patch download
+# over the Broadcom transport, so a slow enable does not abort the Bluetooth stack (normally ~1.1 s).
+PRODUCT_PROPERTY_OVERRIDES += \
+    bluetooth.enable_timeout_ms=8000
