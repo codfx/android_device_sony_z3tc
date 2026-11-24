@@ -1,0 +1,17 @@
+# Copyright (C) 2026 codfx
+# SPDX-License-Identifier: Apache-2.0
+#
+# BRING-UP DEBUG: standby soak logger (see /vendor/bin/z3tc_soak.sh); runs only while persist.vendor.z3tc.soak
+# is 1 (new soak) or 2 (soak running), so it survives PC/adb loss and continues after a reboot.
+service z3tc_soak /vendor/bin/z3tc_soak.sh
+    user root
+    group root
+    seclabel u:r:su:s0
+    disabled
+    oneshot
+
+on property:sys.boot_completed=1 && property:persist.vendor.z3tc.soak=1
+    start z3tc_soak
+
+on property:sys.boot_completed=1 && property:persist.vendor.z3tc.soak=2
+    start z3tc_soak

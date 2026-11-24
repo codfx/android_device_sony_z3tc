@@ -99,6 +99,11 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/debug/z3tc_perfmon.sh:$(TARGET_COPY_OUT_VENDOR)/bin/z3tc_perfmon.sh \
     $(LOCAL_PATH)/debug/z3tc_perfmon.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/z3tc_perfmon.rc
 
+# BRING-UP DEBUG: standby soak logger, started by init at boot (persist.vendor.z3tc.soak), PC-independent
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/debug/z3tc_soak.sh:$(TARGET_COPY_OUT_VENDOR)/bin/z3tc_soak.sh \
+    $(LOCAL_PATH)/debug/z3tc_soak.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/z3tc_soak.rc
+
 # Workaround: untrusted APEX system-server code in dalvik-cache (no fs-verity on 3.4)
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/init.z3tc.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.z3tc.rc
