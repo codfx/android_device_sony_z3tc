@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 codfx
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- Tablet layout: rotate the lock screen with auto-rotate on new installs -->
+    <bool name="def_lockscreen_rotation">true</bool>
+</resources>
