@@ -31,9 +31,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.semc.product.model=SGP621 \
     ro.semc.ms_type_id=PM-0810-BV
 
-# LCD
+# LCD: 320 dpi = 600 dp smallest width, so the launcher and SystemUI use the tablet layout
+# (12L taskbar, dock at the bottom in landscape). At 340 it was 565 dp (phone layout).
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sf.lcd_density=340
+    ro.sf.lcd_density=320
 
 # USB path
 PRODUCT_PROPERTY_OVERRIDES += \
