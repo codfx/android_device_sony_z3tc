@@ -71,6 +71,34 @@ if [ "$RESUME" -lt 30 ] || [ "$RESUME" -ge "$LIMIT" ]; then
     RESUME=$((LIMIT - 5))
 fi
 
+charger_online() {
+    [ "$(cat /sys/class/power_supply/usb/online)$(cat /sys/class/power_supply/qpnp-dc/online)" != 00 ]
+}
+
+# A pause only ends in the driver when the capacity drops to llk_socmin (or on unplug), so raising
+# the limit above the current capacity while paused would not resume charging. In that case let
+# the driver resume first: with llk_socmin at 101 its next check ("capacity >= max" is false now,
+# "capacity <= min" is true) starts charging; then set the real resume level. Same wait as above.
+CAP=$(num "$(cat $B/capacity)" 0)
+if [ "$(cat $B/enable_llk)" = 1 ] && [ "$CAP" -lt "$LIMIT" ] && charger_online; then
+    case "$(cat $B/status)" in
+        Charging|Full) ;;
+        *)
+            RESUME_WAIT=30
+            echo $LIMIT > $B/llk_socmax
+            echo 101 > $B/llk_socmin
+            i=0
+            while [ $i -lt $RESUME_WAIT ]; do
+                case "$(cat $B/status)" in Charging|Full) break ;; esac
+                charger_online || break
+                sleep 1
+                i=$((i + 1))
+            done
+            log_i "limit raised above ${CAP}% while not charging: status $(cat $B/status) after ${i}s"
+            ;;
+    esac
+fi
+
 echo $RESUME > $B/llk_socmin
 echo $LIMIT > $B/llk_socmax
 echo 1 > $B/enable_llk
