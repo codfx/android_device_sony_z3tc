@@ -1,7 +1,12 @@
 # Workaround (3.4 kernel, no fs-verity): Android 12 system_server aborts on APEX
 # system-server jars compiled into /data/dalvik-cache ("Executing untrusted code").
 # odrefresh output can't be verified without fs-verity, so remove them on every boot.
-service z3tc_clean_sscache /system/bin/sh -c "rm -f /data/dalvik-cache/arm/apex@*"
+# Also the /system/framework system-server jars (system@framework@*.jar@classes.*): ART only
+# compiles them into /data/dalvik-cache when their preopted odex does not match, i.e. after
+# hand-swapped framework files (e.g. a services.jar swap invalidates the odex of the jars after
+# it in SYSTEMSERVERCLASSPATH). The boot that compiles them works, the next one loops
+# (2026-11-25). With a flashed build the odex match and these files never exist.
+service z3tc_clean_sscache /system/bin/sh -c "rm -f /data/dalvik-cache/arm/apex@* /data/dalvik-cache/arm/system@framework@*.jar@classes.*"
     user root
     group root
     seclabel u:r:su:s0
