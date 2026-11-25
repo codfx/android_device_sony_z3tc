@@ -36,6 +36,12 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.sf.lcd_density=320
 
+# Settings: single pane by default. The 12L two-pane layout (activity embedding) works in landscape, but each page
+# switch starts a new activity in the right pane: ~640 ms vs ~510 ms single pane on this SoC. Users can turn it
+# back on with: setprop persist.sys.fflag.override.settings_support_large_screen true
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.fflag.override.settings_support_large_screen=false
+
 # USB path
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.usb.pid_suffix=1BB
