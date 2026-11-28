@@ -18,6 +18,15 @@
 # inherit from the shinano-common
 include device/sony/shinano-common/BoardConfigCommon.mk
 
+# SELinux: enforcing. shinano-common puts androidboot.selinux=permissive on the kernel command line for bring-up;
+# z3tc drops it unless a development build asks for permissive with Z3TC_SELINUX_PERMISSIVE=true.
+# Unset means enforcing, so a forgotten variable can never ship a permissive build.
+ifneq ($(Z3TC_SELINUX_PERMISSIVE),true)
+BOARD_KERNEL_CMDLINE := $(filter-out androidboot.selinux=permissive,$(BOARD_KERNEL_CMDLINE))
+else
+$(warning z3tc: Z3TC_SELINUX_PERMISSIVE=true, SELinux permissive - not for release)
+endif
+
 DEVICE_PATH := device/sony/z3tc
 
 # Assert
