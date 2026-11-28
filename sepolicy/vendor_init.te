@@ -1,0 +1,3 @@
+# init.z3tc.charge.rc restarts the charge limiter on property:persist.sys.z3tc.charge_* triggers; init rejects a
+# vendor trigger on a property vendor_init cannot read ("unexported property trigger"), so the limiter never ran.
+get_prop(vendor_init, z3tc_charge_ctl_prop)

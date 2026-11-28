@@ -1,0 +1,2 @@
+# qmuxd reads persist.radio.* (radio_prop, a system public property) at start.
+get_prop(qmuxd, radio_prop)

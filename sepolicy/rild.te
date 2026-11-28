@@ -1,0 +1,3 @@
+# rild reads vendor.rild.libpath to find the Qualcomm RIL library (libril-qc-qmi-1.so); without it rild stays in its
+# "RIL_Init starting sleep loop" and no radio HAL registers (seen under enforcing).
+get_prop(rild, vendor_rild_libpath_prop)

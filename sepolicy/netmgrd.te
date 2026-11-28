@@ -1,0 +1,2 @@
+# netmgrd reads persist.radio.* (radio_prop, a system public property) for mobile data setup.
+get_prop(netmgrd, radio_prop)
