@@ -90,6 +90,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     Z3tcChargeLimit
 
+# Leave out the CTS shim placeholders (see remove-packages/Android.mk)
+PRODUCT_PACKAGES += \
+    Z3tcRemovePackages
+
 # Home screen clock widget: large clock with the date, next alarm and next calendar event
 PRODUCT_PACKAGES += \
     Z3tcClockWidget
