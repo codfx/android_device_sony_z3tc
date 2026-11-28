@@ -1,0 +1,4 @@
+# hwcomposer.msm8974: its tuning properties (see property_contexts) and the public system properties it checks
+# (persist.sys.wfd.virtual, persist.sys.actionsafe.*, sys.hwc.*).
+get_prop(hal_graphics_composer_default, vendor_display_prop)
+get_prop(hal_graphics_composer_default, system_prop)

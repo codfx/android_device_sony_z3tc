@@ -1,0 +1,2 @@
+# The legacy GNSS HAL polls sys.qca1530 (a public system property for an external QCA1530 GNSS chip, absent here).
+get_prop(hal_gnss_default, system_prop)

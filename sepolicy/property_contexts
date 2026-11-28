@@ -1,0 +1,13 @@
+# Display HAL (hwcomposer, gralloc) tuning properties, set in /system/build.prop (msm8974-common / shinano-common
+# system_prop.mk). Unlabelled they are default_prop, which vendor HALs may not read under enforcing SELinux, so
+# the composer silently ran without persist.hwc.mdpcomp.enable=true (MDP composition) and ro.qcom.ad=1
+# (assertive display). vendor_display_prop is declared in device/qcom/sepolicy-legacy.
+persist.hwc.                u:object_r:vendor_display_prop:s0
+persist.metadata_dynfps.    u:object_r:vendor_display_prop:s0
+persist.user.panel3D        u:object_r:vendor_display_prop:s0
+ro.qcom.ad                  u:object_r:vendor_display_prop:s0
+
+# USB product id suffix (system_prop.mk, /system/build.prop), expanded by init.sony.usb.rc as
+# idProduct <n>${ro.usb.pid_suffix}. As default_prop vendor_init could not read it under enforcing SELinux and the
+# tablet enumerated with a wrong product id (0fce:4ee7 instead of 0fce:51bb).
+ro.usb.pid_suffix           u:object_r:vendor_default_prop:s0

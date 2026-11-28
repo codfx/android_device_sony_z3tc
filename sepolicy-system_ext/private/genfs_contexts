@@ -1,5 +1,3 @@
 # Copyright (C) 2026 codfx
 # SPDX-License-Identifier: Apache-2.0
 
-# eMMC I/O counters (/sys/block/mmcblk0/stat), read by storaged
-genfscon sysfs /devices/msm_sdcc.1/mmc_host/mmc1/mmc1:0001/block/mmcblk0/stat u:object_r:sysfs_disk_stat:s0

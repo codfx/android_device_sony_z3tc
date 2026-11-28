@@ -17,14 +17,5 @@ on property:init.svc.mpdecision=running
     stop mpdecision
     setprop vendor.z3tc.mpdecision_stopped 1
 
-# Sony credential manager: credmgrfirstboot.sh sets sys.credmgrdready=true when /data/credmgr is ready
-# (same trigger as shinano-common init.camera.rc, which init rejects there under enforcing).
-on property:sys.credmgrdready=true
-    start credmgrd
-
-# Restart the camera daemon when mediaserver or servicemanager restart (as shinano-common init.camera.rc).
-on property:init.svc.media=restarting
-    restart qcamerasvr
-
-on property:init.svc.servicemanager=restarting
-    restart qcamerasvr
+# The other system-property triggers of this board (credmgrd, qcamerasvr, swcodec ld.config) are in
+# shinano-common init.shinano.system.rc.

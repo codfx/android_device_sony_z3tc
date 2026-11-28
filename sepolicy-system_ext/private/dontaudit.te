@@ -1,0 +1,10 @@
+# Copyright (C) 2026 codfx
+# SPDX-License-Identifier: Apache-2.0
+
+# Platform domains' denials that stay denied but are not logged, each checked to have no functional effect.
+
+# audioserver and cameraserver probe ro.vendor.qti.va_aosp.support (vendor property, unset; default applies).
+dontaudit { audioserver cameraserver } vendor_default_prop:file { read open getattr map };
+
+# ueventd reads /proc/device-tree/compatible (plain proc on this 3.4 kernel); not needed for device nodes.
+dontaudit ueventd proc:file { read open getattr };
