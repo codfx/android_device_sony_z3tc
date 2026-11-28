@@ -35,14 +35,10 @@ on property:init.svc.zygote=restarting
 on property:init.svc.vendor.wifi_hal_legacy=restarting
     write /sys/power/wake_lock "z3tc_wifihal_restart 120000000000"
 
-# No mpdecision, all CPUs online. Bringing a CPU online while its cpufreq policy is being changed resets this
-# SoC (PS_HOLD drop): mpdecision hotplugs 40-60 times a minute under load and its perf locks raise the min
-# frequency on every launch and touch. The power HAL applies the boosts itself through sysfs instead.
-# Triggered by mpdecision's own service state, so it works however and whenever init.qcom.power.rc starts it
-# (its vendor.post_boot.parsed trigger needs a property vendor_init may not set under enforcing SELinux).
-# msm_thermal core control stays on (offlines cpu1-3 only at 80 C as a last resort).
-on property:init.svc.mpdecision=running
-    stop mpdecision
+# No mpdecision, all CPUs online: init.z3tc.system.rc (system_ext) stops mpdecision (its trigger is on
+# init.svc.mpdecision, which init rejects in a vendor rc file under enforcing SELinux) and sets this property;
+# the CPUs are brought online here because vendor_init may write these sysfs files and init (system) may not.
+on property:vendor.z3tc.mpdecision_stopped=1
     write /sys/devices/system/cpu/cpu1/online 1
     write /sys/devices/system/cpu/cpu2/online 1
     write /sys/devices/system/cpu/cpu3/online 1

@@ -1,0 +1,30 @@
+# Copyright (C) 2026 codfx
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# Triggers on system-owned properties (init.svc.*, sys.*). Under enforcing SELinux init rejects such triggers in
+# vendor rc files ("unexported property trigger": vendor_init may not read these properties), so they live here,
+# on the system_ext partition, where init may use them without any extra SELinux permission.
+
+# No mpdecision, all CPUs online. Bringing a CPU online while its cpufreq policy is being changed resets this
+# SoC (PS_HOLD drop): mpdecision hotplugs 40-60 times a minute under load and its perf locks raise the min
+# frequency on every launch and touch. The power HAL applies the boosts itself through sysfs instead.
+# Triggered by mpdecision's own service state, so it works however and whenever init.qcom.power.rc starts it.
+# msm_thermal core control stays on (offlines cpu1-3 only at 80 C as a last resort).
+# init (system) may not write these sysfs files; vendor_init may, so the vendor init.z3tc.rc brings the CPUs
+# online on vendor.z3tc.mpdecision_stopped (a trigger fires on every set, also with the same value).
+on property:init.svc.mpdecision=running
+    stop mpdecision
+    setprop vendor.z3tc.mpdecision_stopped 1
+
+# Sony credential manager: credmgrfirstboot.sh sets sys.credmgrdready=true when /data/credmgr is ready
+# (same trigger as shinano-common init.camera.rc, which init rejects there under enforcing).
+on property:sys.credmgrdready=true
+    start credmgrd
+
+# Restart the camera daemon when mediaserver or servicemanager restart (as shinano-common init.camera.rc).
+on property:init.svc.media=restarting
+    restart qcamerasvr
+
+on property:init.svc.servicemanager=restarting
+    restart qcamerasvr

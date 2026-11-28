@@ -82,7 +82,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Workaround: untrusted APEX system-server code in dalvik-cache (no fs-verity on 3.4)
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/init.z3tc.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.z3tc.rc
+    $(LOCAL_PATH)/init.z3tc.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.z3tc.rc \
+    $(LOCAL_PATH)/init.z3tc.system.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.z3tc.system.rc
 
 # Charge limiter (off by default; persist.sys.z3tc.charge_*, set by the Z3tcChargeLimit app:
 # Quick Settings tile and Settings > Battery > Charge limit)
