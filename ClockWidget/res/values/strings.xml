@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 codfx
+
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <string name="app_name">Clock widget</string>
+    <string name="widget_name">Clock and glance</string>
+    <string name="widget_description">Large clock with the date, next alarm and next calendar event</string>
+    <string name="date_format">EEE, MMM d</string>
+    <!-- %1$s = event start time, %2$s = event title -->
+    <string name="event_format">%1$s · %2$s</string>
+    <string name="event_all_day">Today · %1$s</string>
+    <!-- Settings screen (long-press the widget, then the edit icon) -->
+    <string name="settings_title">Clock widget</string>
+    <string name="settings_show">Show</string>
+    <string name="settings_date">Date</string>
+    <string name="settings_alarm">Next alarm</string>
+    <string name="settings_event">Next calendar event</string>
+    <string name="settings_time_format">Time format</string>
+    <string name="settings_format_system">Use the system setting</string>
+    <string name="settings_format_12">12-hour</string>
+    <string name="settings_format_24">24-hour</string>
+    <string name="settings_size">Clock size</string>
+    <string name="settings_size_small">Small</string>
+    <string name="settings_size_medium">Medium</string>
+    <string name="settings_size_large">Large</string>
+    <string name="settings_done">Done</string>
+</resources>

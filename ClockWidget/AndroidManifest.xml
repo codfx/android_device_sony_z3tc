@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 codfx
+
+     SPDX-License-Identifier: Apache-2.0
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="org.lineageos.z3tc.clockwidget">
+
+    <!-- Optional: only for the next-event line; asked for in the widget's settings -->
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+
+    <application
+        android:label="@string/app_name"
+        android:allowBackup="false">
+
+        <receiver
+            android:name=".ClockWidgetProvider"
+            android:label="@string/widget_name"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <!-- Exempt from the implicit-broadcast limits; none of them wakes the device -->
+                <action android:name="android.app.action.NEXT_ALARM_CLOCK_CHANGED" />
+                <action android:name="android.intent.action.TIME_SET" />
+                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+                <action android:name="android.intent.action.LOCALE_CHANGED" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/clock_widget_info" />
+        </receiver>
+
+        <!-- Re-draws the widget after a wallpaper change (light/dark text) -->
+        <service
+            android:name=".ThemeWatchJob"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="false" />
+
+        <activity
+            android:name=".ConfigureActivity"
+            android:label="@string/settings_title"
+            android:theme="@android:style/Theme.DeviceDefault.DayNight"
+            android:excludeFromRecents="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

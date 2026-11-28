@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 codfx
+
+     SPDX-License-Identifier: Apache-2.0
+-->
+<!-- Large bold clock with a centred "at a glance" block underneath (Dark text). Only RemoteViews-safe views;
+     TextClock updates itself, so there is no update work. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp">
+
+    <TextClock
+        android:id="@+id/clock"
+        style="@style/Clock.Dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:format12Hour="h:mm"
+        android:format24Hour="HH:mm" />
+
+    <LinearLayout
+        android:id="@+id/glance_row"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <TextClock
+            android:id="@+id/date"
+            style="@style/Glance.Dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:format12Hour="@string/date_format"
+            android:format24Hour="@string/date_format" />
+
+        <LinearLayout
+            android:id="@+id/alarm_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_glance_alarm"
+                android:tint="@android:color/system_accent1_800" />
+
+            <TextView
+                android:id="@+id/alarm"
+                style="@style/Glance.Dark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/event_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_glance_event"
+            android:tint="@android:color/system_accent1_800" />
+
+        <TextView
+            android:id="@+id/event"
+            style="@style/Event.Dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp" />
+    </LinearLayout>
+</LinearLayout>

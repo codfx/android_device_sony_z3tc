@@ -89,6 +89,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     Z3tcChargeLimit
 
+# Home screen clock widget: large clock with the date, next alarm and next calendar event
+PRODUCT_PACKAGES += \
+    Z3tcClockWidget
+
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/charge/z3tc_charge_limit.sh:$(TARGET_COPY_OUT_VENDOR)/bin/z3tc_charge_limit.sh \
     $(LOCAL_PATH)/charge/init.z3tc.charge.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/init.z3tc.charge.rc

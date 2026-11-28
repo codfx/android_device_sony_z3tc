@@ -1,0 +1,13 @@
+//
+// Copyright (C) 2026 codfx
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+android_app {
+    name: "Z3tcClockWidget",
+    srcs: ["src/**/*.java"],
+    resource_dirs: ["res"],
+    sdk_version: "current",
+    system_ext_specific: true,
+}

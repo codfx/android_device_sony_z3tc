@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 codfx
+
+     SPDX-License-Identifier: Apache-2.0
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            style="@style/SettingsHeader"
+            android:text="@string/settings_show" />
+
+        <Switch
+            android:id="@+id/show_date"
+            style="@style/SettingsRow"
+            android:text="@string/settings_date" />
+
+        <Switch
+            android:id="@+id/show_alarm"
+            style="@style/SettingsRow"
+            android:text="@string/settings_alarm" />
+
+        <Switch
+            android:id="@+id/show_event"
+            style="@style/SettingsRow"
+            android:text="@string/settings_event" />
+
+        <TextView
+            style="@style/SettingsHeader"
+            android:text="@string/settings_time_format" />
+
+        <RadioGroup
+            android:id="@+id/time_format"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/format_system"
+                style="@style/SettingsRow"
+                android:text="@string/settings_format_system" />
+
+            <RadioButton
+                android:id="@+id/format_12"
+                style="@style/SettingsRow"
+                android:text="@string/settings_format_12" />
+
+            <RadioButton
+                android:id="@+id/format_24"
+                style="@style/SettingsRow"
+                android:text="@string/settings_format_24" />
+        </RadioGroup>
+
+        <TextView
+            style="@style/SettingsHeader"
+            android:text="@string/settings_size" />
+
+        <RadioGroup
+            android:id="@+id/size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/size_small"
+                style="@style/SettingsRow"
+                android:text="@string/settings_size_small" />
+
+            <RadioButton
+                android:id="@+id/size_medium"
+                style="@style/SettingsRow"
+                android:text="@string/settings_size_medium" />
+
+            <RadioButton
+                android:id="@+id/size_large"
+                style="@style/SettingsRow"
+                android:text="@string/settings_size_large" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="16dp"
+            android:text="@string/settings_done" />
+    </LinearLayout>
+</ScrollView>
